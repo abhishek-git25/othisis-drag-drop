@@ -44,9 +44,7 @@ export default function DragDropEditor() {
 
 
     useEffect(() => {
-        if (overlayContentRef.current) {
-            console.log(overlayContentRef.current.scrollHeight, "17");
-
+        if (overlayContentRef.current && showOverlayDrop) {
             overlayContentRef.current.scrollTop = overlayContentRef.current.scrollHeight;
             scrollAnchorRef.current?.scrollIntoView({ behavior: 'smooth' });
         }
@@ -153,18 +151,22 @@ export default function DragDropEditor() {
 
             {/* Drag Overlay Backdrop */}
             {showOverlayDrop && (
-                <div className="fixed inset-0  bg-black/30 backdrop-blur-sm z-30 flex justify-center items-center">
+                <div className="fixed inset-0  bg-black/70 backdrop-blur-sm z-30 flex justify-center items-center">
                     <Droppable id="overlay-drop">
-                        <div ref={overlayContentRef} className="bg-white border-4 border-dashed rounded-xl shadow-xl w-[400px] min-h-[6vh] max-h-[80vh] overflow-auto p-4 flex flex-col gap-2 text-gray-700 text-sm font-medium">
+                        <div ref={overlayContentRef} className="bg-transparent border-2 border-dashed border-white rounded-xl shadow-xl w-[400px] min-h-[6vh] max-h-[80vh] overflow-auto p-4 flex flex-col gap-2 text-gray-700 text-sm font-medium">
                             {usedTemplates.length === 0 && (
                                 <div className="text-gray-400 text-center">Drop here to add</div>
                             )}
                             {usedTemplates.map((item) => (
                                 <div
                                     key={item}
-                                    className="bg-gray-100 p-2 rounded text-center"
+                                    className="bg-[#EDEDED] p-2 rounded  "
                                 >
                                     {item}
+                                    <p className="text-gray-600 text-xs">
+                                        <span className='pr-2'>•</span>
+                                        Toothache for few days
+                                    </p>
                                 </div>
                             ))}
                             <div ref={scrollAnchorRef} className="h-30" />
