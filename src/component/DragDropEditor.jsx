@@ -39,14 +39,16 @@ export default function DragDropEditor() {
     const [usedTemplates, setUsedTemplates] = useState([]);
     const [activeItem, setActiveItem] = useState(null);
     const [showOverlayDrop, setShowOverlayDrop] = useState(false);
+    const [activeDropZone, setActiveDropZone] = useState(null);
     const overlayContentRef = useRef(null);
-    const scrollAnchorRef = useRef(null);
 
 
     useEffect(() => {
         if (overlayContentRef.current && showOverlayDrop) {
-            overlayContentRef.current.scrollTop = overlayContentRef.current.scrollHeight;
-            scrollAnchorRef.current?.scrollIntoView({ behavior: 'smooth' });
+            overlayContentRef.current.scrollTo({
+                top: overlayContentRef.current.scrollHeight,
+                behavior: "smooth",
+            });
         }
     }, [showOverlayDrop]);
 
@@ -85,6 +87,9 @@ export default function DragDropEditor() {
             // collisionDetection={axisAl}
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
+            onDragOver={({ over }) => {
+                setActiveDropZone(over?.id || null);
+            }}
         >
             <div className="flex gap-4 h-[calc(100vh-10rem)] relative">
                 {/* Left Panel */}
@@ -169,7 +174,13 @@ export default function DragDropEditor() {
                                     </p>
                                 </div>
                             ))}
-                            <div ref={scrollAnchorRef} className="h-30" />
+
+                            {activeItem && activeDropZone === 'overlay-drop' && (
+                                <div className="border-2 border-dashed border-gray-400 p-4 rounded bg-gray-100 text-center text-gray-500 text-sm">
+                                    Drop to add "{activeItem}"
+                                </div>
+                            )}
+
                         </div>
                     </Droppable>
                 </div>
