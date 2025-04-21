@@ -146,7 +146,7 @@ export default function DragDropEditor() {
                                     heading={`${item}`}
                                     subheading="Toothache for few days"
                                     onDragStart={() => setActiveItem(item)}
-                                    styles="p-2 bg-gray-200 rounded cursor-grab mb-2 text-sm"
+                                    styles="w-full sm:w-[30%] min-w-[250px] p-2 bg-gray-200 rounded cursor-grab mb-2 text-sm"
                                 />
                             ))}
                         </Droppable>
